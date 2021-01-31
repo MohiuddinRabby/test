@@ -30,7 +30,9 @@ const CountryForm = () => {
   };
   // save result data to firebase database
   const saveToDB = () => {
-    dbConnect.child("countryResult").push(searchResults);
+    dbConnect
+      .child("countryResult")
+      .push(searchResults, alert("saved to Firebase"));
   };
   return (
     <div className="col-md-4 mx-auto px-2">
@@ -52,7 +54,7 @@ const CountryForm = () => {
       <div className="row">
         {searchResults?.map((results, index) => (
           <div className="col-md-3" key={index}>
-            <span className="badge bg-success">{results}</span>
+            <span className="badge bg-success badgeText">{results}</span>
           </div>
         ))}
       </div>
