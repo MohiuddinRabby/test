@@ -30,9 +30,13 @@ const CountryForm = () => {
   };
   // save result data to firebase database
   const saveToDB = () => {
-    dbConnect
-      .child("countryResult")
-      .push(searchResults, alert("saved to Firebase"));
+    if (searchResults.length === 0) {
+      alert("No country selected");
+    } else {
+      dbConnect
+        .child("countryResult")
+        .push(searchResults, alert("saved to Firebase"));
+    }
   };
   return (
     <div className="col-md-4 mx-auto px-2">
