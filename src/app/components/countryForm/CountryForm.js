@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import dbConnect from "../../../firebaseConfig";
 import AllCountry from "../allCountry/AllCountry";
-import { getCountryList } from "./Api/api";
+import { getCountryList } from "./api/Api";
 import "./CountryForm.css";
+
 const CountryForm = () => {
   const [countryList, setCountryList] = useState([]);
   let search = countryList;
@@ -26,6 +28,10 @@ const CountryForm = () => {
   const result = (countries) => {
     setSearchResults([...searchResults, countries]);
   };
+  // save result data to firebase database
+  const saveToDB = () => {
+    dbConnect.child("countryResult").push(searchResults);
+  };
   return (
     <div className="col-md-4 mx-auto px-2">
       <div className="justify-content-center mt-5">
@@ -39,7 +45,9 @@ const CountryForm = () => {
           />
         </div>
       </div>
-      <div className="btn btn-primary mt-2 mb-2">Save</div>
+      <div className="btn btn-primary mt-2 mb-2" onClick={saveToDB}>
+        Save
+      </div>
       {/*SearchResult component  */}
       <div className="row">
         {searchResults?.map((results, index) => (
