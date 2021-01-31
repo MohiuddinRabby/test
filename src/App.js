@@ -1,10 +1,10 @@
 import React from "react";
-import FindCountry from "./app/components/findCountry/FindCountry";
+import CountryForm from "./app/components/countryForm/CountryForm";
 
 const App = () => {
   return (
     <>
-      <FindCountry></FindCountry>
+      <CountryForm></CountryForm>
     </>
   );
 };
