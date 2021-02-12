@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dbConnect from "../../../firebaseConfig";
+import Loader from "../../helper/Loader";
 import AllCountry from "../allCountry/AllCountry";
 import { getCountryList } from "./api/Api";
 import "./CountryForm.css";
@@ -9,9 +10,12 @@ const CountryForm = () => {
   let search = countryList;
   // search country state
   const [itemToSearch, setItemToSearch] = useState("");
+  // loader state
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
     // country api
     getCountryList(setCountryList);
+    setLoader(false);
   }, []);
   const searchItems = (item) => {
     item.preventDefault();
@@ -55,24 +59,32 @@ const CountryForm = () => {
         Save
       </div>
       {/*SearchResult component  */}
-      <div className="row">
-        {searchResults?.map((results, index) => (
-          <div className="col-md-3" key={index}>
-            <span className="badge bg-success badgeText">{results}</span>
-          </div>
-        ))}
-      </div>
+      {loader ? (
+        <Loader />
+      ) : (
+        <div className="row">
+          {searchResults?.map((results, index) => (
+            <div className="col-md-3" key={index}>
+              <span className="badge bg-success badgeText">{results}</span>
+            </div>
+          ))}
+        </div>
+      )}
       {/* AllCountry component */}
-      <div className="country-list">
-        {search.map((allCountrires) => (
-          <div key={allCountrires.alpha3Code}>
-            <AllCountry
-              allCountrires={allCountrires}
-              result={result}
-            ></AllCountry>
-          </div>
-        ))}
-      </div>
+      {loader ? (
+        <Loader />
+      ) : (
+        <div className="country-list">
+          {search.map((allCountrires) => (
+            <div key={allCountrires.alpha3Code}>
+              <AllCountry
+                allCountrires={allCountrires}
+                result={result}
+              ></AllCountry>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
